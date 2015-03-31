@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- Beans to add to the current Application context definition -->
+  
+<beans>
+	
+    <bean id="vctModuleUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    <property name="interceptors">
+		<list>
+			<ref bean="localeChangeInterceptor" />
+		</list>
+	</property>
+    <property name="order">
+    	<value>2</value>
+    </property>
+    	<property name="mappings">
+            <props>	          
+               <prop key="module/vcttrac/vctHome.htm">homeController</prop>
+               <prop key="module/vcttrac/vctClientDashboard.form">clientDashboardController</prop>
+	           <prop key="module/vcttrac/preCounseling.form">vctPreCounselingFormController</prop>
+	           <prop key="module/vcttrac/counseling.form">vctCounselingFormController</prop>
+	           <prop key="module/vcttrac/saveCounseling.htm">vctSaveCounselingViewController</prop>
+	           <prop key="module/vcttrac/vctRegistration.form">startCounselingController</prop>
+	           <prop key="module/vcttrac/getClientCode.htm">myController</prop>
+	           <prop key="module/vcttrac/getClientInfo.htm">clientInfoController</prop>
+	           <prop key="module/vcttrac/getClientCodeForResult.htm">autoCompleteForResultController</prop>
+	           <prop key="module/vcttrac/vctClientResults.form">resultController</prop>
+	           <prop key="module/vcttrac/vctResultReception.form">receptionOfResultController</prop>
+			   <prop key="module/vcttrac/vctStatistics.htm">vctStatisticsController</prop>			   
+               <prop key="module/vcttrac/vctConfigurations.htm">configurationController</prop>
+			   <prop key="module/vcttrac/chart.htm">vctChartController</prop>
+               <prop key="module/vcttrac/vctClientSearch.htm">vctClientSearchController</prop>
+               <prop key="module/vcttrac/vctClientTest.list">clientTestFormController</prop>
+               <prop key="module/vcttrac/hivProgramEnrollment.list">vctProgramEnrollmentController</prop>
+               <prop key="module/vcttrac/vctOverview.htm">vctOverviewController</prop>
+               <prop key="module/vcttrac/vctTracnetIndecators.list">vctTracnetIndicatorsController</prop>
+               <prop key="module/vcttrac/vctClients.list">vctClientsListingController</prop>
+               <prop key="module/vcttrac/vctPreRegistrationCheckup.htm">vctPreRegistrationController</prop>
+               <prop key="module/vcttrac/vctTodayGraphicalStatistic.htm">vctGraphicalStatisticPerDayController</prop>
+	        </props>
+		</property>
+    </bean>
+    
+	<bean id="vctVersusPitChartView" class="org.openmrs.module.vcttrac.web.view.chart.VCTVersusPITChartView" />
+	<bean id="registrationEvolutionPerDayChartView" class="org.openmrs.module.vcttrac.web.view.chart.EvolutionOfClientRegisteredPerDay" />
+	<bean id="vctBarChartView" class="org.openmrs.module.vcttrac.web.view.chart.VCTCreateBarChartView" />
+	<bean id="vctPieChartView" class="org.openmrs.module.vcttrac.web.view.chart.VCTCreatePieChartView" />
+	
+	<bean id="vctChartController" class="org.openmrs.module.vcttrac.web.controller.ChartStatsQueryController">
+		<property name="chartViews">
+			<map>
+				<entry key="vctResultOfHivTest"><ref bean="vctVersusPitChartView" /></entry>
+				<entry key="registrationEvolutionPerDay"><ref bean="registrationEvolutionPerDayChartView" /></entry>
+				<entry key="barChartView"><ref bean="vctBarChartView" /></entry>
+				<entry key="pieChartView"><ref bean="vctPieChartView" /></entry>
+			</map>
+		</property>
+	</bean>
+	
+    <!-- Controllers -->
+    <bean id="vctGraphicalStatisticPerDayController" class="org.openmrs.module.vcttrac.web.controller.VCTGraphicalStatisticPerDayController">
+    	<property name="viewName"><value>/module/vcttrac/graphicStatisticPerDay</value></property>
+    </bean>
+    
+    <bean id="vctProgramEnrollmentController" class="org.openmrs.module.vcttrac.web.controller.VCTProgramEnrollmentController">
+    	<property name="viewName"><value>/module/vcttrac/vctEnrollment</value></property>
+    </bean>
+    
+    <bean id="vctPreRegistrationController" class="org.openmrs.module.vcttrac.web.controller.VCTPreRegistrationCheckupController">
+    	<property name="viewName"><value>/module/vcttrac/vctPreRegistrationCheckup</value></property>
+    </bean>
+    
+    <bean id="vctClientsListingController" class="org.openmrs.module.vcttrac.web.controller.VCTClientListingController">
+    	<property name="viewName"><value>/module/vcttrac/vctClientListing</value></property>
+    </bean>
+    
+    <bean id="vctTracnetIndicatorsController" class="org.openmrs.module.vcttrac.web.controller.VCTTracnetIndicatorsController">
+    	<property name="viewName"><value>/module/vcttrac/vctTracnetIndicators</value></property>
+    </bean>
+    
+    <bean id="vctOverviewController" class="org.openmrs.module.vcttrac.web.controller.VCTOverviewController">
+    	<property name="viewName"><value>/module/vcttrac/vctOverview</value></property>
+    </bean>
+    
+    <bean id="clientTestFormController" class="org.openmrs.module.vcttrac.web.controller.VCTClientViewController">
+    	<property name="viewName"><value>/module/vcttrac/vctClientInfoFrm</value></property>
+    </bean>
+    
+    <bean id="vctClientSearchController" class="org.openmrs.module.vcttrac.web.controller.VCTClientSearchController">
+		<property name="viewName"><value>/module/vcttrac/vctClientSearchForm</value></property>
+    </bean>
+    
+    <bean id="homeController" class="org.openmrs.module.vcttrac.web.controller.VCTHomePageController">
+		<property name="viewName"><value>/module/vcttrac/vctHomePage</value></property>
+    </bean>
+    
+    <bean id="configurationController" class="org.openmrs.module.vcttrac.web.controller.VCTConfigurationsController">
+		<property name="viewName"><value>/module/vcttrac/vctConfiguration</value></property>
+    </bean>
+    
+    <bean id="vctStatisticsController" class="org.openmrs.module.vcttrac.web.controller.VCTStatisticsController">
+		<property name="viewName"><value>/module/vcttrac/vctStatisticsForm</value></property>
+    </bean>
+    
+    <bean id="clientDashboardController" class="org.openmrs.module.vcttrac.web.controller.VCTClientDashboardFormController">
+		<property name="viewName"><value>/module/vcttrac/vctClientDashboardForm</value></property>
+    </bean>
+    
+    <bean id="clientInfoController" class="org.openmrs.module.vcttrac.web.controller.AutoCompleteClientInfoController">
+		<property name="viewName"><value>/module/vcttrac/getClientInfo</value></property>
+    </bean>
+    
+    <bean id="myController" class="org.openmrs.module.vcttrac.web.controller.MyController">
+		<property name="viewName"><value>/module/vcttrac/getClientCode</value></property>
+    </bean>
+    
+    <bean id="autoCompleteForResultController" class="org.openmrs.module.vcttrac.web.controller.AutoCompleteCodeForReceptionController">
+		<property name="viewName"><value>/module/vcttrac/autoCompleteClientCodeForResult</value></property>
+    </bean>
+    
+    <bean id="receptionOfResultController" class="org.openmrs.module.vcttrac.web.controller.VCTReceptionOfResultController">
+		<property name="viewName"><value>/module/vcttrac/receptionResultat</value></property>
+    </bean>
+    
+    <bean id="resultController" class="org.openmrs.module.vcttrac.web.controller.VCTAutoCompleteListController">
+		<!-- <property name="viewName"><value>/module/vcttrac/clientHivResultForm</value></property> -->
+		<property name="formView"><value>/module/vcttrac/clientHivResultForm</value></property>
+		<property name="successView"><value>/module/vcttrac/vctClientResults.form</value></property>
+		<property name="commandName"><value>result</value></property>
+		<property name="commandClass" value="org.openmrs.module.vcttrac.VCTClientResult"></property>
+		<property name="validator">
+			<ref bean="clientResultValidator" />
+		</property>
+    </bean>
+    
+    <bean id="startCounselingController" class="org.openmrs.module.vcttrac.web.controller.VCTRegistrationFormController">
+		<property name="viewName"><value>/module/vcttrac/vctRegistrationForm</value></property>
+    </bean>
+    
+    <bean id="vctPreCounselingFormController" class="org.openmrs.module.vcttrac.web.controller.VCTPreCounselingFormController">
+		<property name="viewName"><value>/module/vcttrac/vctPreCounseling</value></property>
+    </bean>
+    
+    <bean id="vctCounselingFormController" class="org.openmrs.module.vcttrac.web.controller.VCTCounselingFormController">
+		<property name="viewName"><value>/module/vcttrac/vctCounselingForm</value></property>
+    </bean>
+    
+    <bean id="vctSaveCounselingViewController" class="org.openmrs.module.vcttrac.web.controller.VCTSaveCounselingViewController">
+		<property name="viewName"><value>/module/vcttrac/vctSaveCounselingView</value></property>
+    </bean>
+    
+    <!-- /Controllers -->
+    
+    <!-- validators -->
+	
+	<bean id="clientResultValidator" class="org.openmrs.module.vcttrac.validator.VCTClientResultValidator" />
+	
+	<!-- /validators -->
+    
+    <bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>org.openmrs.module.vcttrac.service.VCTModuleService</value>
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager">
+						<ref bean="transactionManager" />
+					</property>
+					<property name="target">
+						<bean class="org.openmrs.module.vcttrac.impl.VCTModuleServiceImpl">
+							<property name="vctDAO">
+								<bean class="org.openmrs.module.vcttrac.db.hibernate.VCTModuleDAOImpl">
+									<property name="sessionFactory">
+										<ref bean="sessionFactory" />
+									</property>
+								</bean>
+							</property>
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<list>
+							<ref bean="authorizationInterceptor" />
+						</list>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+					</property>
+				</bean>
+			</list>
+		</property>
+		
+	</bean>
+	
+    <!-- ========================= other beans ========================= -->
+    
+    <bean class="org.openmrs.module.vcttrac.util.ContextProvider" />
+    
+</beans>
